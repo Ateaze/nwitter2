@@ -1,10 +1,13 @@
-import { authService, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "../fabse";
+import { authService, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider} from "fbase";
+import { signInWithPopup } from "firebase/auth";
 import { useState } from "react";
+import { getAuth } from "firebase/auth";
 
 const Auth = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [newAccount, setNewAccount] = useState(false);
+    const [newAccount, setNewAccount] = useState(true);
+    const [error, setError] = useState("");
 
     const onChange = (Event) => {
         const {
@@ -16,6 +19,8 @@ const Auth = () => {
             setPassword(value);
         }
     };
+
+    const auth = getAuth();
 
     const onSubmit = async (Event) => {
         Event.preventDefault();
@@ -30,9 +35,31 @@ const Auth = () => {
         }
         console.log("Success", data);
     } catch (error) {
-        console.log("Error", error);
+        setError(error.message);
     }
     };
+const toggleAccount = () => setNewAccount((prev) => !prev);
+
+        const onSocialClick = async (Event) => {
+            const {
+                target: { name },
+            } = Event;
+            let provider;
+            if (name === "google") {
+                provider = new GoogleAuthProvider();
+            } else if (name === "github"){
+                provider = new GithubAuthProvider();
+            }
+
+            if(provider) {
+                try {
+                    const result = await signInWithPopup(auth, provider);
+                    console.log("Social login success", result);
+                } catch (error) {
+                    console.error("Social login error", error);
+                }
+            }
+        };
 
     return (
         <div>
@@ -54,10 +81,14 @@ const Auth = () => {
                 onChange={onChange}
                 />
                 <input type="submit" value={newAccount ? "Create Account" : "Log In"} />
+                {error}
             </form>
+            <span onClick={toggleAccount}>
+                {newAccount ? "Sign In" : "Create Account"}
+            </span>
             <div>
-                <button>Continue with Google</button>
-                <button>Continue with Github</button>
+                <button onClick={onSocialClick} name="google">Continue with Google</button>
+                <button onClick={onSocialClick} name="github">Continue with Github</button>
             </div>
         </div>
     );
