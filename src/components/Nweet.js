@@ -54,11 +54,13 @@ const Nweet = ({ nweetObj, isOwner }) => {
                     <form onSubmit={onSubmit}>
                         {/* 새로운 트윗 텍스트 입력 필드 */}
                         <input onChange={onChange} value={newNweet} required />
+                        <br />
                         {/* 업데이트 버튼 */}
                         <input type="submit" value="Update Nweet" />
+                        <button onClick={toggleEditing}>Cancel</button>
                     </form>
                     {/* 편집 취소 버튼 */}
-                    <button onClick={toggleEditing}>Cancel</button>
+                    
                 </>
             ) : ( // 일반 모드일 때
                 <>

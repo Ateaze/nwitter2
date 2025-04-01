@@ -23,7 +23,6 @@ function App() {
     <>
       {/* 초기화가 완료되면 AppRouter를 렌더링 */}
       {init ? ( <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} /> ) : ( "initializing...")}
-      <footer>&copy; {new Date().getFullYear()} Nwitter2</footer>
     </>
   );
 }

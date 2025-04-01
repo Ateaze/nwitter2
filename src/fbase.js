@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import "firebase/firestore"; // Firestore를 사용하기 위한 Firebase 모듈
 import { getFirestore } from "firebase/firestore"; // Firestore 데이터베이스 객체를 가져오는 함수
+import { getStorage } from "firebase/storage"; // Firebase Storage 객체를 가져오는 함수
 
 // Firebase 프로젝트의 설정 정보
 const firebaseConfig = {
@@ -35,3 +36,4 @@ export {
     GithubAuthProvider // Github 로그인 제공자
 };
 export const dbService = getFirestore(); // Firestore 데이터베이스 객체
+export const storageService = getStorage(); // Firebase Storage 객체

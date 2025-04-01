@@ -27,22 +27,21 @@ const Home = ({ userObj }) => {
 
     // 사용자가 트윗을 제출했을 때 호출되는 함수
     const onSubmit = async (Event) => {
-        Event.preventDefault(); // 기본 폼 제출 동작을 막음
-        if (nweet.trim() === "") { // 입력값이 공백일 경우 경고를 표시
+        Event.preventDefault();
+        if (nweet.trim() === "") {
             alert("Nweet is empty");
             return;
         }
         try {
-            // Firestore의 "nweets" 컬렉션에 새 트윗을 추가
             await addDoc(collection(dbService, "nweets"), {
-                text: nweet, // 트윗 내용
-                createdAt: Date.now(), // 현재 시간
-                creatorID: userObj.uid, // 작성자 ID
-                creatorName: userObj.email || "Anonymous", // 작성자 이메일
+                text: nweet,
+                createdAt: Date.now(),
+                creatorID: userObj.uid,
+                creatorName: userObj.email || "Anonymous"
             });
-            setNweet(""); // 입력 필드를 초기화
+            setNweet("");
         } catch (error) {
-            console.error("Error adding document: ", error); // 오류가 발생하면 콘솔에 출력
+            console.error("Error adding document: ", error);
         }
     };
 
