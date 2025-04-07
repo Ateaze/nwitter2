@@ -20,7 +20,7 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
                     <>
                         {/* 로그인한 사용자를 위한 라우트 */}
                         <Route path="/" element={<Home userObj={userObj} />} /> {/* 홈 화면 */}
-                        <Route path="/profile" element={<Profile />} /> {/* 프로필 화면 */}
+                        <Route path="/profile" element={<Profile userObj={userObj} />} /> {/* 프로필 화면 */}
                         <Route path="*" element={<Navigate to="/" />} /> {/* 잘못된 경로는 홈으로 리다이렉트 */}
                     </>
                 ) : (
